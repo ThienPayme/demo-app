@@ -1,0 +1,16 @@
+body {
+    background-color: #eff2f7;
+    overflow: hidden;
+}
+
+a:hover, .ant-menu-item-selected a, .ant-menu-item-selected, .ant-menu-item-active {
+    color: #00be00 !important;
+}
+ 
+.ant-menu-inline .ant-menu-item:after{
+    border-right: 3px solid #00be00
+}
+.ant-card { 
+    border-radius: 12px;
+}
+ 
