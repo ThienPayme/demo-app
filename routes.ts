@@ -16,9 +16,13 @@ export const routes = [
         path: '/transaction-statistics'
     },
     {
-        icon: TransactionOutlined,
+        icon: TransactionOutlined,  
         label: 'Quản lí số dư',
         path: '/balance-management'
     },
-
+    {
+        icon: TransactionOutlined,
+        label: 'Three Column',
+        path: '/three-column'
+    },
 ]

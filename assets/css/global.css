@@ -14,3 +14,10 @@ a:hover, .ant-menu-item-selected a, .ant-menu-item-selected, .ant-menu-item-acti
     border-radius: 12px;
 }
  
+.box{
+    background-color: white;
+    height: 200px; 
+    margin: 10px;
+    padding-top: 80px;
+    text-align: center;
+}
