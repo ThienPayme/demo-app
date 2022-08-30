@@ -37,7 +37,7 @@ const SiderApp = () => {
       width={280}
     >
 
-      <Menu mode="inline" defaultSelectedKeys={['4']} items={items} />
+      <Menu mode="inline" defaultSelectedKeys={['1']} items={items} />
     </Sider>
     </Layout>
   )

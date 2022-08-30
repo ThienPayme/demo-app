@@ -22,7 +22,7 @@ export const routes = [
     },
     {
         icon: TransactionOutlined,
-        label: 'Three Column',
+        label: 'Layout 3 row',
         path: '/three-column'
     },
 ]
