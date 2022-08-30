@@ -8,6 +8,13 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import ModalEdit from '../components/ModalEdit';
 
 import { mockTransactions } from '../mocks/transactions'
+
+
+// import api 
+import { getTransaction, editTransaction, delTransaction, addTransaction } from '../apis/transactions'
+import moment from 'moment';
+import Search from 'antd/lib/input/Search';
+
 interface DataType {
   create_at: string;
   id: string;
@@ -92,11 +99,12 @@ const initColumns = (action: { delete: any, edit: any }): ColumnsType<DataType> 
 const Payment: NextPage = () => {
 
   const [data, setData] = useState<DataType[]>([])
-  const [ openModelEdit, setOpenModelEdit ] = useState(false)
-  const [ dataEdit, setDataEdit] = useState<DataType>()
-
+  const [openModelEdit, setOpenModelEdit] = useState(false)
+  const [dataEdit, setDataEdit] = useState<DataType>()
+  const [onAdd, setOnAdd] = useState(false)
   useEffect(() => {
-    setData(mockTransactions(300))
+    getTransaction({}).then(res => setData(res))
+
   }, [])
 
   const handleToggleModalEdit = (value: boolean) => {
@@ -104,31 +112,54 @@ const Payment: NextPage = () => {
   }
 
   const handleEdit = (data: DataType) => () => {
-    handleToggleModalEdit(true) 
+    handleToggleModalEdit(true)
+    setOnAdd(false)
     setDataEdit(data)
 
   }
-  const handleSave = (updateValue: DataType) =>{
-    
-     setData([...data.map(item=>{
-      if(item.id== dataEdit?.id) return updateValue
-      return item
-     })])
-     handleToggleModalEdit(false) 
+  const handleSave = (updateValue: DataType) => {
+    console.log(updateValue)
+    if (updateValue.id) {
+      setData([...data.map(item => {
+        if (item.id == dataEdit?.id) return updateValue
+        return item
+      })])
+      editTransaction(updateValue.id, updateValue)
+    }
+    else {
+      const newData = { ...updateValue, create_at: moment().format("MM/DD/YYYY").toString(), id: data.length.toString() }
+      addTransaction(newData)
+      setData([newData, ...data])
+
+    }
+    handleToggleModalEdit(false)
   }
   const handleDelete = (id: string) => () => {
     setData([...data.filter(item => item.id !== id)])
+    delTransaction(id)
   }
-
+  const handleAdd = () => {
+    handleToggleModalEdit(true)
+    setOnAdd(true)
+  }
+  const handleSearchById = (id: string) => {
+    getTransaction({id}).then(res => setData(res))
+  }
   const columns = initColumns({ edit: handleEdit, delete: handleDelete })
-  
+
   return (
     <>
-      <ModalEdit isModalVisible={openModelEdit} onCancel= {() => handleToggleModalEdit(false)} onSave={handleSave} defaultData={dataEdit} />
+      <ModalEdit isModalVisible={openModelEdit} onCancel={() => handleToggleModalEdit(false)} onSave={handleSave} defaultData={dataEdit} onAdd={onAdd} />
       <Layout>
         <Content style={{ background: 'white', height: '800px', borderRadius: 10 }}>
-          <Card title="Quản lí giao dịch" bordered={false} style={{ width: '100%' }}>
-            {/* <Space>  <Input placeholder="Basic usage" /></Space> */}
+          <Card title="Quản lí giao dịch" bordered={false} style={{ width: '100%' }} extra={<Button type="primary" size='large' style={{ margin: '0 50px', borderRadius: 10 }} onClick={handleAdd}>Thêm</Button>}>
+            <Search
+              addonBefore="id"
+              placeholder="input search text"
+              allowClear
+              onSearch={handleSearchById}
+              style={{ width: 304 }}
+            />
             <Table columns={columns} dataSource={data} scroll={{ y: 540 }} />
           </Card>
         </Content>

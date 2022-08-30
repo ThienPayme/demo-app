@@ -7,7 +7,7 @@ export const mockTransactions = (size: number) => {
         return {
             create_at: moment(faker.date.past()).format("MM/DD/YYYY").toString(),
             id: faker.random.numeric(10),
-            price: faker.commerce.price(undefined,undefined,3).concat('đ')  ,
+            price: faker.commerce.price(undefined,undefined,3)  ,
             address: faker.address.streetAddress(true),
             type: faker.helpers.arrayElement(['Thẻ ATM', 'Ví Momo', 'Quét QR']),
             status: faker.helpers.arrayElement(['Thành công', 'Thất bại', 'Đang xử lí'])
