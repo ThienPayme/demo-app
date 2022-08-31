@@ -98,12 +98,14 @@ const initColumns = (action: { delete: any, edit: any }): ColumnsType<DataType> 
 
 const Payment: NextPage = () => {
 
-  const [data, setData] = useState<DataType[]>([])
+  const [data, setData] = useState<DataType[]>([]);
+  const [loading, setLoading] = useState(false);
   const [openModelEdit, setOpenModelEdit] = useState(false)
   const [dataEdit, setDataEdit] = useState<DataType>()
   const [onAdd, setOnAdd] = useState(false)
   useEffect(() => {
-    getTransaction({}).then(res => setData(res))
+    setLoading(true)
+    getTransaction({}).then(res => { setData(res.map((item:any, idx: number) => ({...item, key: idx}))); setLoading(false) })
 
   }, [])
 
@@ -143,7 +145,8 @@ const Payment: NextPage = () => {
     setOnAdd(true)
   }
   const handleSearchById = (id: string) => {
-    getTransaction({id}).then(res => setData(res))
+    setLoading(true)
+    getTransaction({ id }).then(res => {setData(res);  setLoading(false)})
   }
   const columns = initColumns({ edit: handleEdit, delete: handleDelete })
 
@@ -158,9 +161,9 @@ const Payment: NextPage = () => {
               placeholder="input search text"
               allowClear
               onSearch={handleSearchById}
-              style={{ width: 304 }}
+              style={{ width: 304 , margin: 20}}
             />
-            <Table columns={columns} dataSource={data} scroll={{ y: 540 }} />
+            <Table columns={columns} dataSource={data} scroll={{ y: 540 }} loading={loading}/>
           </Card>
         </Content>
       </Layout>
