@@ -1,7 +1,8 @@
+import { all } from 'redux-saga/effects';
 
+import transactionSaga from '../features/transaction/transactionSaga'
 
-function* rootSaga(): Generator {
-    console.log('This is Root saga')
-}
-
-export default rootSaga;
+export default function* rootSaga() {
+    yield all([]);
+  }
+  

@@ -1,8 +1,8 @@
 
-export function* fetchData() {
+function* fetchData() {
 
 }
 
-export function* transactionSaga() {
+export default function* transactionSaga() {
     
 }

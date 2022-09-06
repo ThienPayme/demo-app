@@ -1,27 +1,43 @@
-import { Col, Layout, Row } from "antd";
+import { Button, Col, Layout, Row } from "antd";
 import { Content } from "antd/lib/layout/layout";
+import { useState } from "react";
 import BalanceManagement from "./balance-management";
 import Payment from "./index";
 import TransactionsStatistics from "./transaction-statistics";
 const ThreeColumn = () => {
+	const [layout , setLayout] = useState<number>()
+
+	const handleChangeLayout = () =>{
+		if(layout===12) setLayout(24)
+		else setLayout(12)
+	}
   return (
     <>
       <Layout>
         <Content style={{ minWidth: 800 }}>
-          <Row>
-            <Col span={24}>
-              <Payment />
-            </Col>
-          </Row>
-          <Row style={{ marginTop: 10 }}>
-            <Col span={24}>
-              <Row>
-                <TransactionsStatistics />
+				<Button type="ghost" onClick={handleChangeLayout}>Change layout</Button>
+          <Row gutter={10}>
+            <Col span={layout || 12}>
+              <Row style={{ marginTop: 10 }}>
+                <Col span={24}>
+                  <Payment />
+                </Col>
               </Row>
             </Col>
-          </Row>
-          <Row style={{ marginTop: 10 }}>
-            <BalanceManagement />
+            <Col span={layout || 12}>
+              <Row style={{ marginTop: 10  }}>
+                <BalanceManagement width={24}/>
+              </Row>
+            </Col>
+            <Col span={24}>
+              <Row style={{ marginTop: 10  }}>
+                <Col span={24}>
+                  <Row>
+                    <TransactionsStatistics />
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
           </Row>
         </Content>
       </Layout>

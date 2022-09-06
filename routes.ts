@@ -25,4 +25,9 @@ export const routes = [
         label: 'Layout 3 row',
         path: '/three-column'
     },
+    {
+        icon: TransactionOutlined,
+        label: 'test redux',
+        path: '/test-redux'
+    },
 ]

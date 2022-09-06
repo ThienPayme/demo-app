@@ -23,7 +23,8 @@ const listImgs = [
   "http://dev-dashboard.payme.net.vn/assets/img/balances/history-refund.svg",
   "http://dev-dashboard.payme.net.vn/assets/img/balances/ic-mailsms.svg",
 ];
-const BalanceManagement = () => {
+const BalanceManagement = (props: {width: number}) => {
+   
   const dataHistory = mockHistoryTransaction(4);
   const renderItemTransaction = (item: any) => (
     <div key={item.key}>
@@ -75,10 +76,10 @@ const BalanceManagement = () => {
   );
   return (
     <Layout>
-      <Content style={{ background: "white", height: "800px" }}>
+      <Content style={{ background: "white", height: "1000px" }}>
         <Card title="Quản lí số dư" bordered={false} style={{ width: "100%", minWidth: 800 }}>
           <Row justify="center">
-            <Col xl={13} lg={24}>
+            <Col xl={props.width || 13} lg={24}>
               <Card
                 style={{ borderRadius: 12, height: 120, marginBottom: "20px" }}
               >
