@@ -116,6 +116,7 @@ const Payment: NextPage = () => {
   const [openModelEdit, setOpenModelEdit] = useState(false);
   const [dataEdit, setDataEdit] = useState<DataType>();
   const [onAdd, setOnAdd] = useState(false);
+  const [defaultData, setDefaultData] = useState<DataType[]>([])
 
   const { data } = useAppSelector((selector) => selector.transaction);
   const dispatch = useAppDispatch();
@@ -123,6 +124,7 @@ const Payment: NextPage = () => {
   useEffect(() => {
     setLoading(true);
     getTransaction({}).then((res) => {
+      setDefaultData(res.map((item: any, idx: number) => ({ ...item, key: idx })))
       dispatch(
         fetchData(res.map((item: any, idx: number) => ({ ...item, key: idx })))
       );
@@ -171,8 +173,8 @@ const Payment: NextPage = () => {
     setOnAdd(true);
   };
   const handleSearchById = (id: string) => {
-    setLoading(true);
-    dispatch(fetchData([...data.filter(item=> item.id.includes(id))]))
+    setLoading(true); 
+    dispatch(fetchData([...defaultData.filter(item=> item.id.includes(id))]))
     setLoading(false);
     // getTransaction({ id }).then((res) => {
     //   dispatch(fetchData(res))
