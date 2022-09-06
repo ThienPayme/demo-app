@@ -172,11 +172,13 @@ const Payment: NextPage = () => {
   };
   const handleSearchById = (id: string) => {
     setLoading(true);
-    getTransaction({ id }).then((res) => {
-      dispatch(fetchData(res))
+    dispatch(fetchData([...data.filter(item=> item.id.includes(id))]))
+    setLoading(false);
+    // getTransaction({ id }).then((res) => {
+    //   dispatch(fetchData(res))
 
-      setLoading(false);
-    });
+    //   setLoading(false);
+    // });
   };
   const columns = initColumns({ edit: handleEdit, delete: handleDelete });
 

@@ -1,23 +1,29 @@
-import { Button, Col, Layout, Row } from "antd";
+import { Button, Col, Grid, Layout, Row } from "antd";
 import { Content } from "antd/lib/layout/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+const { useBreakpoint } = Grid;
 import BalanceManagement from "./balance-management";
 import Payment from "./index";
 import TransactionsStatistics from "./transaction-statistics";
 const ThreeColumn = () => {
-	const [layout , setLayout] = useState<number>()
-
+	const [layout , setLayout] = useState<number>(12)
+	const screens = useBreakpoint(); 
 	const handleChangeLayout = () =>{
 		if(layout===12) setLayout(24)
 		else setLayout(12)
 	}
+	useEffect(()=>{
+		console.log(screens)
+		if(screens.xxl) setLayout(12)
+		else setLayout(24)
+	},[screens])
   return (
     <>
       <Layout>
         <Content style={{ minWidth: 800 }}>
 				<Button type="ghost" onClick={handleChangeLayout}>Change layout</Button>
           <Row gutter={10}>
-            <Col span={layout || 12}>
+            <Col span={layout}>
               <Row style={{ marginTop: 10 }}>
                 <Col span={24}>
                   <Payment />

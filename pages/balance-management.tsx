@@ -76,8 +76,8 @@ const BalanceManagement = (props: {width: number}) => {
   );
   return (
     <Layout>
-      <Content style={{ background: "white", height: "1000px" }}>
-        <Card title="Quản lí số dư" bordered={false} style={{ width: "100%", minWidth: 800 }}>
+      <Content style={{ background: "white", height: "1000px", borderRadius: 10 }}>
+        <Card title="Quản lí số dư" bordered={false} style={{ width: "100%", minWidth: 600 }}>
           <Row justify="center">
             <Col xl={props.width || 13} lg={24}>
               <Card
@@ -100,7 +100,7 @@ const BalanceManagement = (props: {width: number}) => {
                         <Title level={5}> Số dư hiện có</Title>
                       </Col>
                       <Col>
-                        <Title level={2}> 296,271,400 đ</Title>
+                        <Title level={2}> 296,271 đ</Title>
                       </Col>
                     </Row>
                   </Col>
