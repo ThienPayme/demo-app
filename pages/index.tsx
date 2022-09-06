@@ -4,8 +4,8 @@ import { Content } from "antd/lib/layout/layout";
 import Table, { ColumnsType } from "antd/lib/table";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-
 import ModalEdit from "../components/ModalEdit";
+import { useAppDispatch, useAppSelector } from "../redux/hook";
 
 // import api
 import Search from "antd/lib/input/Search";
@@ -16,6 +16,12 @@ import {
   editTransaction,
   getTransaction,
 } from "../apis/transactions";
+import {
+  fetchData,
+  updateData,
+  deleteData,
+  createData,
+} from "../features/transaction/transactionSlice";
 
 interface DataType {
   create_at: string;
@@ -106,15 +112,20 @@ const initColumns = (action: {
 };
 
 const Payment: NextPage = () => {
-  const [data, setData] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(false);
   const [openModelEdit, setOpenModelEdit] = useState(false);
   const [dataEdit, setDataEdit] = useState<DataType>();
   const [onAdd, setOnAdd] = useState(false);
+
+  const { data } = useAppSelector((selector) => selector.transaction);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     setLoading(true);
     getTransaction({}).then((res) => {
-      setData(res.map((item: any, idx: number) => ({ ...item, key: idx })));
+      dispatch(
+        fetchData(res.map((item: any, idx: number) => ({ ...item, key: idx })))
+      );
       setLoading(false);
     });
   }, []);
@@ -129,14 +140,14 @@ const Payment: NextPage = () => {
     setDataEdit(data);
   };
   const handleSave = (updateValue: DataType) => {
-    console.log(updateValue);
     if (updateValue.id) {
-      setData([
-        ...data.map((item) => {
-          if (item.id == dataEdit?.id) return updateValue;
-          return item;
-        }),
-      ]);
+      dispatch(updateData(updateValue));
+      // setData([
+      //   ...data.map((item) => {
+      //     if (item.id == dataEdit?.id) return updateValue;
+      //     return item;
+      //   }),
+      // ]);
       editTransaction(updateValue.id, updateValue);
     } else {
       const newData = {
@@ -145,12 +156,14 @@ const Payment: NextPage = () => {
         id: data.length.toString(),
       };
       addTransaction(newData);
-      setData([newData, ...data]);
+      // setData([newData, ...data]);
+      dispatch(createData(newData));
     }
     handleToggleModalEdit(false);
   };
   const handleDelete = (id: string) => () => {
-    setData([...data.filter((item) => item.id !== id)]);
+    // setData([...data.filter((item) => item.id !== id)]);
+    dispatch(deleteData(id));
     delTransaction(id);
   };
   const handleAdd = () => {
@@ -160,7 +173,8 @@ const Payment: NextPage = () => {
   const handleSearchById = (id: string) => {
     setLoading(true);
     getTransaction({ id }).then((res) => {
-      setData(res);
+      dispatch(fetchData(res))
+
       setLoading(false);
     });
   };
@@ -177,7 +191,7 @@ const Payment: NextPage = () => {
       />
       <Layout>
         <Content
-          style={{ background: "white", height: "800px", borderRadius: 10 }}
+          style={{ background: "white", height: "1000px", borderRadius: 10 }}
         >
           <Card
             title="Quản lí giao dịch"
@@ -202,9 +216,10 @@ const Payment: NextPage = () => {
               style={{ width: 304, margin: 20 }}
             />
             <Table
+              
               columns={columns}
               dataSource={data}
-              scroll={{ y: 540 }}
+              scroll={{ y: 540, x: 1000 }}
               loading={loading}
             />
           </Card>

@@ -1,30 +1,32 @@
-import { Button, Card, Col, DatePicker, Input, Layout, Row, Tooltip } from "antd"
-import { Content } from "antd/lib/layout/layout"
-import { SearchOutlined } from '@ant-design/icons';
-import LineChart from '../components/LineChart'
-import moment from "moment";
+import { Col, Layout, Row } from "antd";
+import { Content } from "antd/lib/layout/layout";
+import BalanceManagement from "./balance-management";
+import Payment from "./index";
+import TransactionsStatistics from "./transaction-statistics";
 const ThreeColumn = () => {
-	return (<>
-		<Layout>
-			<Content style={{}}>
-				<Row>
-					<Col span={24}>
-						<div className="box"> 1 column
-							<Row >
-								<Col span={12}  > <div className="box">2 column</div></Col>
-								<Col span={12} > <div className="box">2 column</div></Col>
-							</Row>
-						</div>
-					</Col>
-				</Row>
-				<Row>
-					<Col span={8}><div className="box">3 column</div></Col>
-					<Col span={8}><div className="box">3 column</div></Col>
-					<Col span={8}><div className="box">3 column</div></Col>
-				</Row>
-			</Content>
-		</Layout>
-	</>)
-}
+  return (
+    <>
+      <Layout>
+        <Content style={{ minWidth: 500 }}>
+          <Row>
+            <Col span={24}>
+              <Payment />
+            </Col>
+          </Row>
+          <Row style={{ marginTop: 10 }}>
+            <Col span={24}>
+              <Row>
+                <TransactionsStatistics />
+              </Row>
+            </Col>
+          </Row>
+          <Row style={{ marginTop: 10 }}>
+            <BalanceManagement />
+          </Row>
+        </Content>
+      </Layout>
+    </>
+  );
+};
 
-export default ThreeColumn
+export default ThreeColumn;

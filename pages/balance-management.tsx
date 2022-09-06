@@ -76,7 +76,7 @@ const BalanceManagement = () => {
   return (
     <Layout>
       <Content style={{ background: "white", height: "800px" }}>
-        <Card title="Quản lí số dư" bordered={false} style={{ width: "100%" }}>
+        <Card title="Quản lí số dư" bordered={false} style={{ width: "100%", minWidth: 800 }}>
           <Row justify="center">
             <Col xl={13} lg={24}>
               <Card
