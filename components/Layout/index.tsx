@@ -23,7 +23,7 @@ export default function Layout(props: Props) {
         style={{
           marginTop: 64,
           marginLeft: leftContert,
-          overflow: "hidden",
+         
           padding: 25,
         }}
       >

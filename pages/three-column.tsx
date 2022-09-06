@@ -7,7 +7,7 @@ const ThreeColumn = () => {
   return (
     <>
       <Layout>
-        <Content style={{ minWidth: 500 }}>
+        <Content style={{ minWidth: 800 }}>
           <Row>
             <Col span={24}>
               <Payment />
