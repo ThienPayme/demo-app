@@ -1,10 +1,12 @@
 import { Button } from "antd";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 const TestRedux = () => {
-  const {t} = useTranslation()
-  return <>
-    <Button type="primary">{t('content.login')}</Button>
-  </>;
+  const { t } = useTranslation();
+  return (
+    <>
+      <Button type="primary">click</Button>
+    </>
+  );
 };
 
 export default TestRedux;

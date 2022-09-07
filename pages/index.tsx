@@ -10,17 +10,13 @@ import { useAppDispatch, useAppSelector } from "../redux/hook";
 // import api
 import Search from "antd/lib/input/Search";
 import moment from "moment";
-import {
-  addTransaction,
-  delTransaction,
-  editTransaction,
-  getTransaction,
-} from "../apis/transactions";
+ 
 import {
   fetchData,
   updateData,
   deleteData,
   createData,
+  searchById
 } from "../features/transaction/transactionSlice";
 import { useTranslation } from "react-i18next";
 
@@ -116,7 +112,6 @@ const Payment: NextPage = () => {
   const [openModelEdit, setOpenModelEdit] = useState(false);
   const [dataEdit, setDataEdit] = useState<DataType>();
   const [onAdd, setOnAdd] = useState(false);
-  const [defaultData, setDefaultData] = useState<DataType[]>([]);
   
   const { t } = useTranslation();
 
@@ -125,7 +120,6 @@ const Payment: NextPage = () => {
   const dataFieldName = t('content.transactionFieldData', { returnObjects: true });
 
   useEffect(() => {
-    setDefaultData(data);
     dispatch(fetchData());
   }, []);
 
@@ -147,6 +141,7 @@ const Payment: NextPage = () => {
         create_at: moment().format("MM/DD/YYYY").toString(),
         id: data.length.toString(),
       };
+      
       dispatch(createData(newData));
     }
     handleToggleModalEdit(false);
@@ -159,7 +154,7 @@ const Payment: NextPage = () => {
     setOnAdd(true);
   };
   const handleSearchById = (id: string) => {
-    setDefaultData([...data.filter((item) => item.id.includes(id))]);
+    dispatch(searchById(id))
   };
   const columns = initColumns({ edit: handleEdit, delete: handleDelete }, dataFieldName);
 
@@ -192,15 +187,15 @@ const Payment: NextPage = () => {
             }
           >
             <Search
-              addonBefore="id"
-              placeholder="input search text"
+              addonBefore="Mã đơn hàng"
+              placeholder=""
               allowClear
               onSearch={handleSearchById}
               style={{ width: 304, margin: 20 }}
             />
             <Table
               columns={columns}
-              dataSource={defaultData.length ? defaultData : data}
+              dataSource={data}
               scroll={{ y: 540, x: 1000 }}
               loading={loading}
             />

@@ -1,6 +1,6 @@
 import {
 	Form,
-	Input, Modal,
+	Input, InputNumber, Modal,
 	Select
 } from "antd";
 import { Option } from "antd/lib/mentions";
@@ -74,7 +74,7 @@ const ModalEdit = (props: Props) => {
             name={"price"}
             rules={[{ required: true, message: "Field is required" }]}
           >
-            <Input placeholder="số tiền " addonBefore={"Số tiền: "} />
+            <InputNumber placeholder="số tiền " addonBefore={"Số tiền: "} />
           </Form.Item>
           <Form.Item
             label="Dia chi"
