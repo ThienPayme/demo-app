@@ -22,6 +22,7 @@ import {
   deleteData,
   createData,
 } from "../features/transaction/transactionSlice";
+import { useTranslation } from "react-i18next";
 
 interface DataType {
   create_at: string;
@@ -35,35 +36,35 @@ interface DataType {
 const initColumns = (action: {
   delete: any;
   edit: any;
-}): ColumnsType<DataType> => {
+}, dataFieldName: any): ColumnsType<DataType> => {
   return [
     {
-      title: "Thời gian tạo",
+      title: dataFieldName.createdAt,
       dataIndex: "create_at",
       key: "create_at",
     },
     {
-      title: "Mã đơn hàng",
+      title: dataFieldName.idOrder,
       dataIndex: "id",
       key: "id",
     },
     {
-      title: "Số tiền",
+      title: dataFieldName.price,
       dataIndex: "price",
       key: "price",
     },
     {
-      title: "Địa chỉ",
+      title: dataFieldName.address,
       dataIndex: "address",
       key: "address",
     },
     {
-      title: "Phương thức thanh toán",
+      title: dataFieldName.method,
       key: "type",
       dataIndex: "type",
     },
     {
-      title: "Trạng thái",
+      title: dataFieldName.status,
       key: "status",
       dataIndex: "status",
       render: (_, { status }) => {
@@ -79,7 +80,7 @@ const initColumns = (action: {
       },
     },
     {
-      title: "Thao tác",
+      title: dataFieldName.actions,
       key: "action",
       dataIndex: "action",
       render: (_, data) => {
@@ -112,24 +113,20 @@ const initColumns = (action: {
 };
 
 const Payment: NextPage = () => {
-  const [loading, setLoading] = useState(false);
   const [openModelEdit, setOpenModelEdit] = useState(false);
   const [dataEdit, setDataEdit] = useState<DataType>();
   const [onAdd, setOnAdd] = useState(false);
-  const [defaultData, setDefaultData] = useState<DataType[]>([])
+  const [defaultData, setDefaultData] = useState<DataType[]>([]);
+  
+  const { t } = useTranslation();
 
-  const { data } = useAppSelector((selector) => selector.transaction);
+  const { data, loading } = useAppSelector((selector) => selector.transaction);
   const dispatch = useAppDispatch();
+  const dataFieldName = t('content.transactionFieldData', { returnObjects: true });
 
   useEffect(() => {
-    setLoading(true);
-    getTransaction({}).then((res) => {
-      setDefaultData(res.map((item: any, idx: number) => ({ ...item, key: idx })))
-      dispatch(
-        fetchData(res.map((item: any, idx: number) => ({ ...item, key: idx })))
-      );
-      setLoading(false);
-    });
+    setDefaultData(data);
+    dispatch(fetchData());
   }, []);
 
   const handleToggleModalEdit = (value: boolean) => {
@@ -144,45 +141,27 @@ const Payment: NextPage = () => {
   const handleSave = (updateValue: DataType) => {
     if (updateValue.id) {
       dispatch(updateData(updateValue));
-      // setData([
-      //   ...data.map((item) => {
-      //     if (item.id == dataEdit?.id) return updateValue;
-      //     return item;
-      //   }),
-      // ]);
-      editTransaction(updateValue.id, updateValue);
     } else {
       const newData = {
         ...updateValue,
         create_at: moment().format("MM/DD/YYYY").toString(),
         id: data.length.toString(),
       };
-      addTransaction(newData);
-      // setData([newData, ...data]);
       dispatch(createData(newData));
     }
     handleToggleModalEdit(false);
   };
   const handleDelete = (id: string) => () => {
-    // setData([...data.filter((item) => item.id !== id)]);
     dispatch(deleteData(id));
-    delTransaction(id);
   };
   const handleAdd = () => {
     handleToggleModalEdit(true);
     setOnAdd(true);
   };
   const handleSearchById = (id: string) => {
-    setLoading(true); 
-    dispatch(fetchData([...defaultData.filter(item=> item.id.includes(id))]))
-    setLoading(false);
-    // getTransaction({ id }).then((res) => {
-    //   dispatch(fetchData(res))
-
-    //   setLoading(false);
-    // });
+    setDefaultData([...data.filter((item) => item.id.includes(id))]);
   };
-  const columns = initColumns({ edit: handleEdit, delete: handleDelete });
+  const columns = initColumns({ edit: handleEdit, delete: handleDelete }, dataFieldName);
 
   return (
     <>
@@ -198,7 +177,7 @@ const Payment: NextPage = () => {
           style={{ background: "white", height: "1000px", borderRadius: 10 }}
         >
           <Card
-            title="Quản lí giao dịch"
+            title={t('content.transactionTitle')}
             bordered={false}
             style={{ width: "100%" }}
             extra={
@@ -208,7 +187,7 @@ const Payment: NextPage = () => {
                 style={{ margin: "0 50px", borderRadius: 10 }}
                 onClick={handleAdd}
               >
-                Thêm
+                {t('content.buttonAdd')}
               </Button>
             }
           >
@@ -220,9 +199,8 @@ const Payment: NextPage = () => {
               style={{ width: 304, margin: 20 }}
             />
             <Table
-              
               columns={columns}
-              dataSource={data}
+              dataSource={defaultData.length ? defaultData : data}
               scroll={{ y: 540, x: 1000 }}
               loading={loading}
             />

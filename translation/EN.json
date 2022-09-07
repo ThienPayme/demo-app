@@ -1,0 +1,16 @@
+{
+  "content": {
+    "transactionTitle": "Transaction Management",
+    "transactionFieldData": {
+      "createdAt": "Created At",
+      "idOrder": "ID",
+      "price": "Price",
+      "address": "Address",
+      "method": "Method",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "buttonAdd": "Add"
+
+  }
+}

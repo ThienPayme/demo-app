@@ -1,0 +1,15 @@
+{
+  "content": {
+    "transactionTitle": "Quản lí giao dịch",
+    "transactionFieldData": {
+      "createdAt": "Thời gian tạo",
+      "idOrder": "Mã đơn hàng",
+      "price": "Số tiền",
+      "address": "Địa chỉ",
+      "method": "Phương thức thanh toán",
+      "status": "Trạng thái",
+      "actions": "Thao tác"
+    },
+    "buttonAdd": "Thêm"
+  }
+}

@@ -18,7 +18,7 @@ interface DataType {
 const ModalEdit = (props: Props) => {
   const { isModalVisible, onSave, onCancel, defaultData, onAdd } = props;
 
-  useEffect(() => {
+  useEffect(() => { 
     if (onAdd) {
       form.setFieldsValue({
         status: "Thành công",
@@ -52,7 +52,7 @@ const ModalEdit = (props: Props) => {
             .validateFields()
             .then((values) => {
               form.resetFields();
-              onSave(values);
+              onSave({...defaultData, ...values});
             })
             .catch((info) => {
               console.log("Validate Failed:", info);

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import moment from 'moment';
 
 import { DataTransaction } from '../../interfaces';
 
@@ -21,10 +22,14 @@ export const transactionSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    fetchData: (state, action: PayloadAction<DataTransaction[]>) => {
-      state.data = action.payload;
+    fetchData: (state) => {
+      state.loading = true;
     },
-    updateData: (state, action: PayloadAction<DataTransaction>) => {
+    fetchDataSuccess: (state, action: PayloadAction<DataTransaction[]>) => {
+      state.data = action.payload;
+      state.loading = false;
+    },
+    updateData: (state, action: PayloadAction<DataTransaction>) => { 
       state.data = state.data.map(item => {
         if (item.id === action.payload.id) return action.payload;
         return item;
@@ -35,12 +40,15 @@ export const transactionSlice = createSlice({
         return item.id !== action.payload;
       });
     },
-    createData: (state, action: PayloadAction<DataTransaction>)=>{
-      state.data.unshift(action.payload)
-    }
+    createData: (state, action: PayloadAction<DataTransaction>) => {
+       state.data = [action.payload, ...state.data]
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
   }
 });
 
 
-export const { fetchData, updateData, deleteData, createData } = transactionSlice.actions;
+export const { fetchData, updateData, deleteData, createData, fetchDataSuccess, setError } = transactionSlice.actions;
 export default transactionSlice.reducer;

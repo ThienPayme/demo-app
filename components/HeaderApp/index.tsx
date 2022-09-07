@@ -1,11 +1,17 @@
 import { BellOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Col, Layout, Popover, Row, Typography } from "antd";
+import { Avatar, Col, Layout, Popover, Row, Select, Typography } from "antd";
+import { Option } from "antd/lib/mentions"; 
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const { Header } = Layout;
 const { Title } = Typography;
 
 const HeaderApp = () => {
+  const { i18n } = useTranslation()
+  const handleChangeLanguage = (value: string) => {
+    i18n.changeLanguage(value);
+  };
   const content = (
     <div>
       <p>Content</p>
@@ -43,6 +49,16 @@ const HeaderApp = () => {
         <Col span={6}>
           <Row justify="end">
             <Col>
+              <Select
+                defaultValue="vi"
+                size="large"
+                onChange={handleChangeLanguage}
+              >
+                <Option value="vi">Vietnamese</Option>
+                <Option value="en">English</Option>
+              </Select>
+            </Col>
+            <Col>
               <Popover
                 placement="bottomLeft"
                 title={"Profile"}
@@ -58,7 +74,6 @@ const HeaderApp = () => {
             </Col>
 
             <Col>
-              {" "}
               <Popover
                 placement="bottomLeft"
                 title={"Notification"}
