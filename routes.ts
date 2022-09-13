@@ -27,7 +27,7 @@ export const routes = [
     },
     {
         icon: TransactionOutlined,
-        label: 'test redux',
-        path: '/test-redux'
+        label: 'Push Notification',
+        path: '/push-notification'
     },
 ]
