@@ -30,4 +30,9 @@ export const routes = [
         label: 'Push Notification',
         path: '/push-notification'
     },
+    {
+      icon: TransactionOutlined,
+      label: 'Webcam Detection',
+      path: '/webcam-detection'
+  },
 ]
