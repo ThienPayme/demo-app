@@ -22,8 +22,8 @@ export const routes = [
     },
     {
         icon: TransactionOutlined,
-        label: 'Layout 3 row',
-        path: '/three-column'
+        label: 'Layout Grid',
+        path: '/layout-grid'
     },
     {
         icon: TransactionOutlined,
