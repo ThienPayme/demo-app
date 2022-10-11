@@ -20,6 +20,8 @@ const WebcamPage = () => {
         <input type="file" accept="image/*" capture="user" />
         <input type="file" accept="image/*" capture="environment" />
       </div>
+      <h1>QR Code Scanner</h1>
+      <canvas id="qr-canvas"></canvas>
     </>
   );
 };
