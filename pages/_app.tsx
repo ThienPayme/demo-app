@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 
 import "antd/dist/antd.min.css";
 import "../assets/css/global.css";
-
+import "../styles/main.scss"
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 
