@@ -2,7 +2,7 @@ import {
     AppstoreOutlined,
     TransactionOutlined,
     ControlOutlined
-  } from '@ant-design/icons';
+} from '@ant-design/icons';
 
 export const routes = [
     {
@@ -16,7 +16,7 @@ export const routes = [
         path: '/transaction-statistics'
     },
     {
-        icon: TransactionOutlined,  
+        icon: TransactionOutlined,
         label: 'Quản lí số dư',
         path: '/balance-management'
     },
@@ -31,8 +31,13 @@ export const routes = [
         path: '/push-notification'
     },
     {
-      icon: TransactionOutlined,
-      label: 'Webcam Detection',
-      path: '/webcam-detection'
-  },
-]
+        icon: TransactionOutlined,
+        label: 'Webcam Detection',
+        path: '/webcam-detection'
+    },
+    {
+        icon: TransactionOutlined,
+        label: 'QR code',
+        path: '/test-qrcode'
+    },
+];
