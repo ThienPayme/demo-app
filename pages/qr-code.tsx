@@ -1,9 +1,32 @@
-import React from 'react'
-import QRcode from '../components/QRCode'
+import React, { useState } from "react";
+import QrCodeReader from "../components/qr-code-reader";
+import QRcode from "../components/QRCode";
 const QRCodePage = () => {
-  return (
-    <div><QRcode/></div>
-  )
-}
+  const [scan, setScan] = useState(false);
 
-export default QRCodePage
+  const handleScanQr = (result: any, error: any) => {
+    if (!!result) {
+      setScan(false);
+      alert(result.text);
+    }
+
+    if (!!error) {
+      console.info(error);
+    }
+  };
+
+  return (
+    <div>
+      {" "}
+      <QrCodeReader
+        onScan={handleScanQr}
+        open={true}
+        onCancel={() => {
+          // setScan(false);
+        }}
+      />
+    </div>
+  );
+};
+
+export default QRCodePage;
